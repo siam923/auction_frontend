@@ -9,6 +9,7 @@ export default authMiddleware({
     "/api/zoom/",
     "api/zoom/(.*)",
   ],
+  ignoredRoutes: ["/api/zoom", "/api/zoom/(.*)"],
 });
 
 export const config = {

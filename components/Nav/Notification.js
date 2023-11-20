@@ -33,7 +33,7 @@ const Notification = () => {
     if (!dropdownOpen) {
       setLastNotificationId(null); // Reset last notification ID when dropdown is closed
     }
-  }, [dropdownOpen]);
+  }, [dropdownOpen, lastNotificationId]);
 
   const handleBellClick = () => {
     setDropdownOpen(!dropdownOpen);

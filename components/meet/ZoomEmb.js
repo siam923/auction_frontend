@@ -6,15 +6,23 @@ function ZoomEmb({ mn, pwd, sdkKey, userName }) {
   const client = ZoomMtgEmbedded.createClient();
 
   const getSignature = async () => {
-    try {
-      const response = await axios.post("/api/zoom", {
+    fetch("/api/zoom", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
         meetingNumber: mn,
         role: 0,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        startMeeting(data.signature);
+      })
+      .catch((error) => {
+        console.error(`Error: ${error}`);
       });
-      startMeeting(response.data.signature);
-    } catch (error) {
-      console.error(`Error: ${error}`);
-    }
   };
 
   let meetingNumber = mn;

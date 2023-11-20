@@ -9,8 +9,6 @@ const ItemCard = ({ item }) => {
       <Image
         className="h-[300px] object-contain"
         src={item.image}
-        layout="raw"
-        objectFit="contain"
         width={400}
         height={400}
         alt={item.name}
