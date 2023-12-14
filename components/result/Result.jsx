@@ -22,7 +22,7 @@ function Result() {
     }
 
     if (!data || Object.keys(data).length === 0) {
-        return <div className="text-center mt-4">You haven't bid for any item yet.</div>;
+        return <div className="text-center mt-4">You haven&apos;t bid for any item yet.</div>;
     }
 
     return (

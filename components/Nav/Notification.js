@@ -7,7 +7,9 @@ import NotificationItem from "./NotificationItem";
 
 const Notification = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [lastNotificationId, setLastNotificationId] = useState(null);
+  const [lastViewedNotificationId, setLastViewedNotificationId] =
+    useState(null);
+  const [latestNotificationId, setLatestNotificationId] = useState(null);
 
   const {
     data: notifications,
@@ -17,41 +19,39 @@ const Notification = () => {
   } = useQuery({
     queryKey: ["notifications"],
     queryFn: fetchNotification,
-    refetchInterval: 1000000, // Adjust as needed
+    refetchInterval: 30000, // Adjust as needed
   });
 
   useEffect(() => {
     if (notifications?.length > 0) {
-      const latestId = notifications[0].NotificationId; // Assuming the latest notification is at index 0
-      if (latestId !== lastNotificationId) {
-        setLastNotificationId(latestId);
-      }
+      const latestId = notifications[0].NotificationId;
+      setLatestNotificationId(latestId); // Set the latest notification ID
     }
   }, [notifications]);
 
   useEffect(() => {
-    if (!dropdownOpen) {
-      setLastNotificationId(null); // Reset last notification ID when dropdown is closed
+    if (dropdownOpen) {
+      setLastViewedNotificationId(latestNotificationId); // Update last viewed when dropdown opens
     }
-  }, [dropdownOpen, lastNotificationId]);
+  }, [dropdownOpen, latestNotificationId]);
 
   const handleBellClick = () => {
     setDropdownOpen(!dropdownOpen);
     if (!dropdownOpen) {
       refetch(); // Refetch notifications when bell icon is clicked
+      setLastViewedNotificationId(latestNotificationId); // Mark as read when opened
     }
   };
+
+  const hasUnread = latestNotificationId !== lastViewedNotificationId;
 
   if (isLoading)
     return (
       <p>
-        {" "}
         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
       </p>
     );
   if (error) return <div>Error fetching: {error.message}</div>;
-
-  const hasUnread = lastNotificationId !== null;
 
   return (
     <div className="relative">
