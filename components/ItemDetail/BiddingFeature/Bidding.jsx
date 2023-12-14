@@ -11,7 +11,7 @@ import LoadingComponent from '@/components/LoadingSkeleton';
 
 
 
-const Bidding = ({itemId, basePrice}) => {
+const Bidding = ({itemId, basePrice, auctionEndTime}) => {
     const { isSignedIn, user, isLoaded } = useUser();
     const { isLoading, error, data } = useQuery({
       queryKey: ['bids', itemId],
@@ -44,7 +44,7 @@ const Bidding = ({itemId, basePrice}) => {
     return (
       <div className="flex-1 p-4">
         {isSignedIn? (
-          <BidForm itemId={itemId} currentBid={highestBidPrice} user={user}/>
+          <BidForm itemId={itemId} currentBid={highestBidPrice} user={user} auctionEndTime={auctionEndTime}/>
         ) : (
           <SignInToBid />
         )}

@@ -24,7 +24,11 @@ export default async function ListItem({ params }) {
             conferenceLink={item.conferenceLink}
           />
         </div>
-        <Bidding itemId={id} basePrice={item.basePrice} />
+        <Bidding
+          itemId={id}
+          basePrice={item.basePrice}
+          auctionEndTime={item.auctionEndTime}
+        />
       </div>
     </div>
   );

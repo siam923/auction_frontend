@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 
-const CountdownTimer = ({ targetDate }) => {
+const CountdownTimer = ({ targetDate, onTimeUp }) => {
   const [timeLeft, setTimeLeft] = useState({});
 
   useEffect(() => {
@@ -16,6 +16,8 @@ const CountdownTimer = ({ targetDate }) => {
           minutes: Math.floor((difference / 1000 / 60) % 60),
           seconds: Math.floor((difference / 1000) % 60),
         };
+      } else {
+        onTimeUp();
       }
 
       return timeLeft;
@@ -26,7 +28,7 @@ const CountdownTimer = ({ targetDate }) => {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [targetDate]);
+  }, [targetDate, onTimeUp]);
 
   const formattedTime = `${
     timeLeft.days ? `${timeLeft.days} days : ` : ""

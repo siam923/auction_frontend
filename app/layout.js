@@ -23,8 +23,7 @@ export default function RootLayout({ children }) {
               <main className="container mx-auto ">{children}</main>
               <Toaster />
               <footer className="mt-auto bg-gray-800 text-white text-center py-4">
-                © {new Date().getFullYear()} Your Auction Site. All Rights
-                Reserved.
+                © {new Date().getFullYear()} GRABIT. All Rights Reserved.
               </footer>
             </div>
           </body>

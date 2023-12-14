@@ -12,6 +12,9 @@ const BidInfo = ({ basePrice, bids }) => {
           <p className="text-md mt-2 text-blue-700">
             Bidder: <span className="font-medium">{highestBid.name}</span>
           </p>
+          <p className="text-sm mt-1 text-blue-600">
+            Contact: <span className="font-medium">{highestBid.userId}</span>
+          </p>
         </div>
       ) : (
         <p className="text-lg font-semibold text-blue-800">

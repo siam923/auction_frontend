@@ -1,12 +1,23 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { postBid } from "@/lib/api";
 
-const BidForm = ({ itemId, currentBid, user }) => {
+const BidForm = ({ itemId, currentBid, user, auctionEndTime }) => {
   const { toast } = useToast();
   const [bidAmount, setBidAmount] = useState("");
+  const [isAuctionEnded, setIsAuctionEnded] = useState(false);
+
+  useEffect(() => {
+    const checkIfAuctionEnded = () => {
+      const now = new Date();
+      const auctionEnd = new Date(auctionEndTime);
+      setIsAuctionEnded(now >= auctionEnd);
+    };
+
+    checkIfAuctionEnded();
+  }, [auctionEndTime]);
 
   //Async api calls
   const queryClient = useQueryClient();
@@ -43,9 +54,19 @@ const BidForm = ({ itemId, currentBid, user }) => {
     };
 
     submitBid(data);
-    // Reset bid amount after submission
     setBidAmount("");
   };
+
+  if (isAuctionEnded) {
+    return (
+      <div className="mt-4 bg-white p-4 rounded-lg shadow text-center">
+        <h3 className="text-lg font-semibold text-gray-800">Auction Ended</h3>
+        <p className="text-md text-gray-600 mt-2">
+          Come back next time for more exciting auctions!
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="mt-4 bg-white p-4 rounded-lg shadow mb-4">

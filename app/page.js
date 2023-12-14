@@ -1,4 +1,3 @@
-import LoadingComponent from "@/components/LoadingSkeleton";
 import HeroSection from "@/components/home/HeroSection";
 import UserStory from "@/components/home/UserStory";
 
